@@ -15,7 +15,17 @@ class App < HyperComponent
   # Route('/user/:id/name', mounts: UserName) : path segments beginning with a colon will be captured in the match param
   # see the hyper-router gem documentation for more details
 
+  def on_change(e)
+    mutate @value = e.target.value
+  end
+
   render do
-    H1 { "Hello world from Hyperstack!" }
+    DIV do
+        Test.map do |t|
+            H1 { t.name }
+        end
+        INPUT(value: @value).on(:change, &method(:on_change))
+        BUTTON { "Add" }.on(:click) { Test.create(name: @value) }
+    end
   end
 end
