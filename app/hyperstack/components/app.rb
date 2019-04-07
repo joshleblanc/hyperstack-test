@@ -1,31 +1,21 @@
-# app/hyperstack/component/app.rb
-
-# This is your top level component, the rails router will
-# direct all requests to mount this component.  You may
-# then use the Route psuedo component to mount specific
-# subcomponents depending on the URL.
-
 class App < HyperComponent
-  include Hyperstack::Router
-
-  # define routes using the Route psuedo component.  Examples:
-  # Route('/foo', mounts: Foo)                : match the path beginning with /foo and mount component Foo here
-  # Route('/foo') { Foo(...) }                : display the contents of the block
-  # Route('/', exact: true, mounts: Home)     : match the exact path / and mount the Home component
-  # Route('/user/:id/name', mounts: UserName) : path segments beginning with a colon will be captured in the match param
-  # see the hyper-router gem documentation for more details
-
-  def on_change(e)
-    mutate @value = e.target.value
-  end
+  theme = `Mui.createMuiTheme({
+    palette: {
+      type: 'dark',
+      primary: Mui.colors.blueGrey,
+      secondary: Mui.colors.orange
+    }
+  })`
 
   render do
-    DIV do
-        Test.map do |t|
-            H1 { t.name }
+    Notistack.SnackbarProvider do
+      Mui.MuiThemeProvider(theme: theme) do
+        DIV do
+          Mui.CssBaseline()
+          Navbar()
+          Routes()
         end
-        INPUT(value: @value).on(:change, &method(:on_change))
-        BUTTON { "Add" }.on(:click) { Test.create(name: @value) }
+      end
     end
   end
 end
