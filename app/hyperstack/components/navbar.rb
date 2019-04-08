@@ -3,8 +3,7 @@ class Navbar < HyperComponent
   links = [
     { text: "Home", route: "/" },
     { text: "Replays", route: "/replays"},
-    { text: "Upload", route: "/replays/upload"},
-    { text: "Login", route: "/login"}
+    { text: "Upload", route: "/replays/upload"}
   ]
   render do
     p @acting_user
@@ -12,6 +11,11 @@ class Navbar < HyperComponent
       Mui.Toolbar do
         links.map do |l|
           Mui.Button { l[:text] }.on(:click) { AppStore.history.push(l[:route]) }
+        end
+        if User.current.id
+          Mui.Button(onClick: ->() { LogoutOperation.run }) { "Logout" }
+        else
+          Mui.Button { "Login" }.on(:click) { AppStore.history.push("/login") }
         end
       end
     end
