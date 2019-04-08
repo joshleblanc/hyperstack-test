@@ -14,7 +14,11 @@ class Login < HyperComponent
   `
 
   def handle_submit(values, props)
-    LoginOperation.run(email: `values.native.native.email`, password: `values.native.native.password`)
+    LoginOperation.run(email: `values.native.native.email`, password: `values.native.native.password`).then do
+      enqueueSnackbar.call("User logged in", { variant: "success" }.to_n)
+    end.fail do
+      enqueueSnackbar.call("Error logging in", { variant: "error" }.to_n)
+    end
   end
 
   render do
