@@ -12,10 +12,10 @@ class Navbar < HyperComponent
   def logout
     LogoutOperation.run.then do
       p "logout success"
-      enqueueSnackbar.call("User logged out", { variant: "error" }.to_n)
+      enqueueSnackbar.call("User logged out", { variant: "success" }.to_n)
     end.fail do
       p "logout fail"
-      enqueueSnackbar.call("Error logging out", { variant: "success" }.to_n)
+      enqueueSnackbar.call("Error logging out", { variant: "error" }.to_n)
     end
   end
 
@@ -27,7 +27,7 @@ class Navbar < HyperComponent
           Mui.Button { l[:text] }.on(:click) { AppStore.history.push(l[:route]) }
         end
         if CurrentUser.logged_in
-          Mui.Button(onClick: ->() { LogoutOperation.run }) { "Logout" }
+          Mui.Button(onClick: ->() { logout }) { "Logout" }
         else
           Mui.Button { "Login" }.on(:click) { AppStore.history.push("/login") }
         end

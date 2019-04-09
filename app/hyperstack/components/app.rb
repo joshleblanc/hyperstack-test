@@ -1,4 +1,8 @@
 class App < HyperComponent
+  include Hyperstack::State::Observable
+  receives LogoutOperation do
+    "Logged out"
+  end
   theme = `Mui.createMuiTheme({
     palette: {
       type: 'dark',
@@ -6,6 +10,7 @@ class App < HyperComponent
       secondary: Mui.colors.orange
     }
   })`
+
 
   render do
     Notistack.SnackbarProvider do

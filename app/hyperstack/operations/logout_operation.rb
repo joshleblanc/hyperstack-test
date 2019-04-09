@@ -1,4 +1,4 @@
 class LogoutOperation < Hyperstack::ControllerOp
-  step { sign_out(current_user)  }
+  step { fail unless sign_out(current_user)  }
   dispatch_to { session_channel }
 end
