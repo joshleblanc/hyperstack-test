@@ -1,7 +1,8 @@
 class App < HyperComponent
   include Hyperstack::State::Observable
+
   receives LogoutOperation do
-    "Logged out"
+    p "Logged out"
   end
   theme = `Mui.createMuiTheme({
     palette: {
