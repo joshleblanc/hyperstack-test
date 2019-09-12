@@ -67,4 +67,4 @@ group :development do
   gem 'foreman'
 end
 
-gem "devise", "~> 4.6"
+gem "devise", "~> 4.7"
